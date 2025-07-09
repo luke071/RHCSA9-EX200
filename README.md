@@ -1,6 +1,25 @@
 This repository will provide solutions to the Red Hat Certified Systems Administrator (RHCSA EX200 ) exam preparation tasks. Tasks will be executed using Rocky Linux 9 systems in an Oracle VirtualBox environment.
 
-# Task 1 Configuring a local DNF repository on the Server using the Rocky-9.6-x86_64-dvd image
+# Task 1 Network configuration
+
+Renaming servers and assigning IP addresses:
+
+Server A:
+```bash
+hostnamectl set-hostname server-a
+nmcli connection show
+sudo nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.50/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
+nmcli con up "enp0s2"
+```
+Server B:
+```bash
+hostnamectl set-hostname server-b
+nmcli connection show
+sudo nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
+nmcli con up "enp0s2"
+```
+
+# Task 2 Configuring a local DNF repository on the Server using the Rocky-9.6-x86_64-dvd image
 
 Mount ISO on RHEL 9:
 ```bash
@@ -35,7 +54,7 @@ Checking the repository's functionality by installing the package:
 dnf search httpd
 ```
 
-# Task 2 Web server configuration with welcome message
+# Task 3 Web server configuration with welcome message
 
 Checking the current firewall configuration:
 
@@ -68,3 +87,29 @@ firewall-cmd --reload
 Test:  
 ![alt text](./assets/2.1.png)  
 
+# Task 4 Set the time zone to "Europe/Copenhagen"
+Checking the current time zone:
+```bash
+timedatectl status
+timedatectl set-timezone "Europe/Copenhagen"
+```
+# Task 5 Configuring NTP time synchronization
+
+Editing the Chrony configuration file:
+```bash
+# vi /etc/chrony.conf
+server 0.pool.ntp.org iburs
+```
+![alt text](./assets/5.1.png)  
+Enable NTP synchronization:
+```bash
+timedatectl set-ntp true
+```
+Restarting the chronyd service:
+```bash
+systemctl restart chronyd
+```
+Checking the NTP source:
+```bash
+systemctl restart chronyd
+```
