@@ -38,7 +38,7 @@ df -h
 ![alt text](./assets/1.2.png)  
 ![alt text](./assets/1.3.png)  
 
-Repository file configuration:
+Repository file configuration:  
 ```bash
 vi /etc/yum.repos.d/rhel9.repo 
 ```
@@ -53,6 +53,8 @@ Checking the repository's functionality by installing the package:
 ```bash
 dnf search httpd
 ```
+Automatically mount the ISO on system startup. Add in file /etc/fstab:  
+/dev/sr0 /localrepo/ iso9660 ro,loop,user 0 0 
 
 # Task 3 Web server configuration with welcome message
 
