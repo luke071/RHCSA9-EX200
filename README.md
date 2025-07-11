@@ -115,3 +115,26 @@ Checking the NTP source:
 ```bash
 systemctl restart chronyd
 ```
+
+# Task 6 Running a Wordpress container with Podman
+
+ Run a WordPress container in detached mode with the name "hello-wordpress" using podman. Mount the
+ “/home/wordpress/var/www/html/” directory in the host to the “/var/www/html” directory in the podman container. Map TCP port 80 in the container to port 80 on the host.  
+
+```bash
+ dnf install container-tools -y
+ podman search wordpress
+ podman pull docker.io/library/wordpress
+ podman tag docker.io/library/wordpress localhost/wordpress
+ systemctl stop httpd 
+ mkdir -p /home/wordpress/var/www/html
+ podman run --name hello-wordpress -d -v /home/wordpress/var/www/html/:/var/www/html:Z -p 80:80 localhost/wordpress
+ podman ps
+ firewall-cmd --list-all
+ firewall-cmd --add-port=80/tcp --permanent
+ firewall-cmd --reload
+ firewall-cmd --list-all
+```
+
+Check in your browser:
+![alt text](./assets/6.1.png)  
