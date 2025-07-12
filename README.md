@@ -8,16 +8,18 @@ Renaming servers and assigning IP addresses:
 
 Server A:
 ```bash
+su -
 hostnamectl set-hostname server-a
 nmcli connection show
-sudo nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.50/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
+nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.50/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
 nmcli con up "enp0s2"
 ```
 Server B:
 ```bash
+su -
 hostnamectl set-hostname server-b
 nmcli connection show
-sudo nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
+nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/24" ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
 nmcli con up "enp0s2"
 ```
 
