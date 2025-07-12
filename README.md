@@ -1,5 +1,7 @@
 This repository will provide solutions to the Red Hat Certified Systems Administrator (RHCSA EX200 ) exam preparation tasks. Tasks will be executed using Rocky Linux 9 systems in an Oracle VirtualBox environment.
 
+![alt text](./assets/diagram1.png)  
+
 # Task 1 Network configuration
 
 Renaming servers and assigning IP addresses:
@@ -19,7 +21,7 @@ sudo nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/2
 nmcli con up "enp0s2"
 ```
 
-# Task 2 Configuring a local DNF repository on the Server using the Rocky-9.6-x86_64-dvd image
+# Task 2 Configuring a local DNF repository on Server A using the Rocky-9.6-x86_64-dvd image
 
 Mount ISO on RHEL 9:
 ```bash
@@ -56,7 +58,7 @@ dnf search httpd
 Automatically mount the ISO on system startup. Add in file /etc/fstab:  
 /dev/sr0 /localrepo/ iso9660 ro,loop,user 0 0 
 
-# Task 3 Web server configuration with welcome message
+# Task 3 Web server configuration with welcome message on Server A
 
 Checking the current firewall configuration:
 
@@ -89,13 +91,14 @@ firewall-cmd --reload
 Test:  
 ![alt text](./assets/2.1.png)  
 
-# Task 4 Set the time zone to "Europe/Copenhagen"
+# Task 4 Set the time zone to "Europe/Copenhagen" on Server A
+
 Checking the current time zone:
 ```bash
 timedatectl status
 timedatectl set-timezone "Europe/Copenhagen"
 ```
-# Task 5 Configuring NTP time synchronization
+# Task 5 Configuring NTP time synchronization on Server A
 
 Editing the Chrony configuration file:
 ```bash
@@ -116,7 +119,7 @@ Checking the NTP source:
 systemctl restart chronyd
 ```
 
-# Task 6 Running a Wordpress container with Podman
+# Task 6 Running a Wordpress container with Podman on Server A
 
  Run a WordPress container in detached mode with the name "hello-wordpress" using podman. Mount the
  “/home/wordpress/var/www/html/” directory in the host to the “/var/www/html” directory in the podman container. Map TCP port 80 in the container to port 80 on the host.  
