@@ -215,3 +215,15 @@ Change the serverB hostname to rhel.server.com and make it persistent.
 
 open file /etc/hostname  
 and change line to: rhel.server.com
+
+# Question 11
+
+On rhel.server.com, add a new enviroment variable "VAR" with the value "RHCSA Prac Five" which will be available throughout the system, on both remote login session as well as local sessions for all users.
+
+open file /etc/bashrc  
+and add the line: export VAR="RHCSA Prac Five"  
+source /etc/bashrc  
+echo $VAR  
+
+
+
