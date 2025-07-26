@@ -177,12 +177,12 @@ Check in your browser:
 On ServerB, do the following:
 1. Create users Luke, Andrew, Mark and John.
     Luke and Andrew are members of the Innovation group.
-    Mark and John are members of the Expert gorup.
+    Mark and John are members of the Expert group.
 2. Create shared group directories /groups/Innovation and /groups/Expert
-3. Make the Innovation group the owner group of the /groups/Onnovation directory, and the Expert group the owner group of the /groups/Expert directory.
-4. Grant the groups that own the Innovation and Expert direcotires full access to these directories.
+3. Make the Innovation group the owner group of the /groups/Innovation directory, and the Expert group the owner group of the /groups/Expert directory.
+4. Grant the groups that own the Innovation and Expert directories full access to these directories.
 5. Others don't have access to the Innovation and Expert directories
-6. New files created in Innovation and Expert directories belong to thr group of which the directory is member.
+6. New files created in Innovation and Expert directories belong to the group of which the directory is a member.
 7. Members of The Expert group have read and execute permissions on the /groups/Innovation directory and all of its sub-directories and files.
 
 ```bash
@@ -199,4 +199,12 @@ chmod o-x /groups/Innovation && chmod o-x /groups/Expert
 chmod g+s /groups/Innovation && chmod g+s /groups/Expert
 setfacl -Rm g:Expert:r-x /groups/Innovation
 getfacl /groups/Innovation
+```
+
+# Question 9
+
+On ServerB, set SELinux to "enforcing" mode.
+```bash
+getenforce
+setenforce 1
 ```
