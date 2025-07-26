@@ -222,8 +222,23 @@ On rhel.server.com, add a new enviroment variable "VAR" with the value "RHCSA Pr
 
 open file /etc/bashrc  
 and add the line: export VAR="RHCSA Prac Five"  
+```bash
 source /etc/bashrc  
 echo $VAR  
+```
+
+# Question 12
+
+On rhel.server.com, configure a permanent storage for "journald" logs with 100 max use.
+
+open file /etc/systemd/journald.conf  
+uncomment and change line to: Storage=persistent  
+and SystemMaxUse=100M
+```bash
+systemctl restart systemd-journald
+reboot
+ls /var/log/journal
+```
 
 
 
