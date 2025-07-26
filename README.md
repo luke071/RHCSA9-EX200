@@ -208,3 +208,10 @@ On ServerB, set SELinux to "enforcing" mode.
 getenforce
 setenforce 1
 ```
+
+# Question 10
+
+Change the serverB hostname to rhel.server.com and make it persistent.
+
+open file /etc/hostname  
+and change line to: rhel.server.com
