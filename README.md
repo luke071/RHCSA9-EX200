@@ -249,7 +249,7 @@ find /etc -type f -mtime +90 > /modified_etc_files
 
 # Question 14
 
-On rhel.server.com, create a ascriipt named "/usr/local/bin/find.sh" to find all files under the directory "/etc" that are less than 4M and have SGID permissions set. Then save the list of found files to /root/4Mfiles.  
+On rhel.server.com, create a script named "/usr/local/bin/find.sh" to find all files under the directory "/etc" that are less than 4M and have SGID permissions set. Then save the list of found files to /root/4Mfiles.  
 vi /usr/local/bin/find.sh
 
 #!/bin/bash  
@@ -258,4 +258,11 @@ find /etc -size -4M -perm -g=s > /root/4Mfiles
 ```bash
 chmod a + x /usr/local/bin/find.sh
 /usr/local/bin/find.sh
+```
+# Question 15
+
+On rhel.server.com, find the word "error" in all files in the current directory and redirect the result to the file "/root.erros"
+
+```bash
+grep -r 'error' > /root/errors
 ```
