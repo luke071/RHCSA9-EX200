@@ -2,7 +2,7 @@ This repository will provide solutions to the Red Hat Certified Systems Administ
 
 ![alt text](./assets/diagram1.png)  
 
-# 1.1 Reset forgotten root password
+# Question 1
 
 Reset the root password on Server B. Change it to "newpassword" to gain access to the system.  
 
@@ -24,7 +24,7 @@ reboot
 ```
 
 
-# 1.2 Network configuration
+# Question 2 
 
 Renaming servers and assigning IP addresses:
 
@@ -45,7 +45,8 @@ nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/24" ip
 nmcli con up "enp0s2"
 ```
 
-# 1.3 Configuring a local DNF repository on Server A using the Rocky-9.6-x86_64-dvd image
+# Question 3 
+Configuring a local DNF repository on Server A using the Rocky-9.6-x86_64-dvd image.
 
 Mount ISO on RHEL 9:
 ```bash
@@ -82,7 +83,8 @@ dnf search httpd
 Automatically mount the ISO on system startup. Add in file /etc/fstab:  
 /dev/sr0 /localrepo/ iso9660 ro,loop,user 0 0 
 
-# 1.4 Web server configuration with welcome message on Server A
+# Question 4 
+Web server configuration with welcome message on Server A
 
 Checking the current firewall configuration:
 
@@ -115,14 +117,16 @@ firewall-cmd --reload
 Test:  
 ![alt text](./assets/2.1.png)  
 
-# 1.5 Set the time zone to "Europe/Copenhagen" on Server A
+# Question 5 
+Set the time zone to "Europe/Copenhagen" on Server A
 
 Checking the current time zone:
 ```bash
 timedatectl status
 timedatectl set-timezone "Europe/Copenhagen"
 ```
-# 1.6 Configuring NTP time synchronization on Server A
+# Question 6 
+Configuring NTP time synchronization on Server A.
 
 Editing the Chrony configuration file:
 ```bash
@@ -143,7 +147,8 @@ Checking the NTP source:
 systemctl restart chronyd
 ```
 
-# 1.7 Running a Wordpress container with Podman on Server A
+# Question 7 
+Running a Wordpress container with Podman on Server A.
 
  Run a WordPress container in detached mode with the name "hello-wordpress" using podman. Mount the
  “/home/wordpress/var/www/html/” directory in the host to the “/var/www/html” directory in the podman container. Map TCP port 80 in the container to port 80 on the host.  
@@ -165,3 +170,33 @@ systemctl restart chronyd
 
 Check in your browser:  
 ![alt text](./assets/6.1.png)  
+
+
+# Question 8 
+
+On ServerB, do the following:
+1. Create users Luke, Andrew, Mark and John.
+    Luke and Andrew are members of the Innovation group.
+    Mark and John are members of the Expert gorup.
+2. Create shared group directories /groups/Innovation and /groups/Expert
+3. Make the Innovation group the owner group of the /groups/Onnovation directory, and the Expert group the owner group of the /groups/Expert directory.
+4. Grant the groups that own the Innovation and Expert direcotires full access to these directories.
+5. Others don't have access to the Innovation and Expert directories
+6. New files created in Innovation and Expert directories belong to thr group of which the directory is member.
+7. Members of The Expert group have read and execute permissions on the /groups/Innovation directory and all of its sub-directories and files.
+
+```bash
+useradd Luke && useradd Andrew && useradd Mark && useradd John
+groupadd Innovation && groupadd Expert
+usermod -aG Innovation Luke && usermod -aG Innovation Andrew
+usermod -aG Expert Mark && usermod -aG Expert John
+mkdir -p /groups/Innovation
+mkdir -p /groups/Expert
+chgrp Innovation /groups/Innovation
+chgrp Expert /groups/Expert
+chmod g+rwx /groups/Innovation && chmod g+rwx /groups/Expert
+chmod o-x /groups/Innovation && chmod o-x /groups/Expert
+chmod g+s /groups/Innovation && chmod g+s /groups/Expert
+setfacl -Rm g:Expert:r-x /groups/Innovation
+getfacl /groups/Innovation
+```
