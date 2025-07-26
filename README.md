@@ -242,8 +242,20 @@ ls /var/log/journal
 
 # Question 13
 
-On rhel.server.com, find all regular files in the "/etc" directory that were modified more than 90 days ageo and redirect the output do /modified_etc_files.
+On rhel.server.com, find all regular files in the "/etc" directory that were modified more than 90 days ago and redirect the output to /modified_etc_files.
 ```bash
 find /etc -type f -mtime +90 > /modified_etc_files
 ```
 
+# Question 14
+
+On rhel.server.com, create a ascriipt named "/usr/local/bin/find.sh" to find all files under the directory "/etc" that are less than 4M and have SGID permissions set. Then save the list of found files to /root/4Mfiles.  
+vi /usr/local/bin/find.sh
+
+#!/bin/bash  
+find /etc -size -4M -perm -g=s > /root/4Mfiles  
+
+```bash
+chmod a + x /usr/local/bin/find.sh
+/usr/local/bin/find.sh
+```
