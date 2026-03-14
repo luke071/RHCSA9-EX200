@@ -2,29 +2,7 @@ This repository will provide solutions to the Red Hat Certified Systems Administ
 
 ![alt text](./assets/diagram1.png)  
 
-# Question 1
-
-Reset the root password on Server B. Change it to "newpassword" to gain access to the system.  
-
-In the boot menu, select the second option and press "e" to edit boot options.
-![alt text](./assets/1.01.png)  
-
-Adding rd.break. Save and restart - Ctrl + X
-![alt text](./assets/1.02.png) 
-
-We mount and run the main partition. We set a new password. Create a hidden file named .autorelabel in the root directory. Exit and restart.  
-
-```bash
-mount -o remount rw /sysroot
-chroot /sysroot
-passwd root
-touch /.autorelabel
-exit
-reboot
-```
-
-
-# Question 2 
+# Question 1 
 
 Renaming servers and assigning IP addresses:
 
@@ -45,7 +23,7 @@ nmcli con modify "enp0s2" ipv4.method manual ipv4.addresses "192.168.0.51/24" ip
 nmcli con up "enp0s2"
 ```
 
-# Question 3 
+# Question 2 
 Configuring a local DNF repository on Server A using the Rocky-9.6-x86_64-dvd image.
 
 Mount ISO on RHEL 9:
@@ -83,7 +61,7 @@ dnf search httpd
 Automatically mount the ISO on system startup. Add in file /etc/fstab:  
 /dev/sr0 /localrepo/ iso9660 ro,loop,user 0 0 
 
-# Question 4 
+# Question 3 
 Web server configuration with welcome message on Server A
 
 Checking the current firewall configuration:
@@ -117,7 +95,7 @@ firewall-cmd --reload
 Test:  
 ![alt text](./assets/2.1.png)  
 
-# Question 5 
+# Question 4 
 Set the time zone to "Europe/Copenhagen" on Server A
 
 Checking the current time zone:
@@ -125,7 +103,7 @@ Checking the current time zone:
 timedatectl status
 timedatectl set-timezone "Europe/Copenhagen"
 ```
-# Question 6 
+# Question 5 
 Configuring NTP time synchronization on Server A.
 
 Editing the Chrony configuration file:
@@ -147,7 +125,7 @@ Checking the NTP source:
 systemctl restart chronyd
 ```
 
-# Question 7 
+# Question 6 
 Running a Wordpress container with Podman on Server A.
 
  Run a WordPress container in detached mode with the name "hello-wordpress" using podman. Mount the
@@ -170,6 +148,27 @@ Running a Wordpress container with Podman on Server A.
 
 Check in your browser:  
 ![alt text](./assets/6.1.png)  
+
+# Question 7
+
+Reset the root password on Server B. Change it to "newpassword" to gain access to the system.  
+
+In the boot menu, select the second option and press "e" to edit boot options.
+![alt text](./assets/1.01.png)  
+
+Adding rd.break. Save and restart - Ctrl + X
+![alt text](./assets/1.02.png) 
+
+We mount and run the main partition. We set a new password. Create a hidden file named .autorelabel in the root directory. Exit and restart.  
+
+```bash
+mount -o remount rw /sysroot
+chroot /sysroot
+passwd root
+touch /.autorelabel
+exit
+reboot
+```
 
 
 # Question 8 
