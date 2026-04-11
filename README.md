@@ -265,3 +265,38 @@ On rhel.server.com, find the word "error" in all files in the current directory 
 ```bash
 grep -r 'error' > /root/errors
 ```
+
+# Question 16
+
+Run the PostgreSQL database in a container with Podman and connect remotely.
+
+Container launch:
+
+```bash
+sudo podman run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres
+```
+-d → works in the background  
+-p 5432:5432 → exposes the PostgreSQL port to the system  
+-e POSTGRES_PASSWORD=postgres → sets the password for the postgres user  
+postgres → official database image  
+
+You check:
+```bash
+sudo firewall-cmd --list-ports
+```
+If there is a port:
+5432/tcp
+
+The firewall allows network traffic to port 5432. If there is no port, then:  
+
+```bash
+sudo firewall-cmd --add-port=5432/tcp --permanent
+sudo firewall-cmd --reload
+```
+--add-port → opens the port  
+--permanent → saves it permanently    
+--reload → activates the change immediately    
+
+Remote connection to PostgreSQL database:
+
+![alt text](./assets/16-1.png)  
