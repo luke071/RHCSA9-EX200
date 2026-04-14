@@ -82,10 +82,11 @@ systemctl enable httpd
 ```
 
 Creating a welcome page:
-Adding a greeting - Hello!
-vi /var/www/html/index.html
-
-
+Adding a greeting - Hello!  
+`# vi /var/www/html/index.html`  
+```bash
+Hello!
+```
 Permanently opening HTTP and HTTPS ports in the firewall and reloading:
 ```bash
 firewall-cmd --add-service=http --permanent
@@ -107,8 +108,8 @@ timedatectl set-timezone "Europe/Copenhagen"
 Configuring NTP time synchronization on Server A.
 
 Editing the Chrony configuration file:
+`vi /etc/chrony.conf`
 ```bash
-# vi /etc/chrony.conf
 server 0.pool.ntp.org iburs
 ```
 ![alt text](./assets/5.1.png)  
@@ -140,7 +141,13 @@ Running a Wordpress container with Podman on Server A.
  mkdir -p /home/wordpress/var/www/html
  podman run --name hello-wordpress -d -v /home/wordpress/var/www/html/:/var/www/html:Z -p 80:80 localhost/wordpress
  podman ps
- firewall-cmd --list-all
+ sudo firewall-cmd --list-ports
+```
+If there is a port:  
+80/tcp
+
+The firewall allows network traffic to port 80. If there is no port, then:
+```bash
  firewall-cmd --add-port=80/tcp --permanent
  firewall-cmd --reload
  firewall-cmd --list-all
@@ -156,8 +163,8 @@ Reset the root password on Server B. Change it to "newpassword" to gain access t
 In the boot menu, select the second option and press "e" to edit boot options.
 ![alt text](./assets/1.01.png)  
 
-Adding rd.break. Save and restart - Ctrl + X
-![alt text](./assets/1.02.png) 
+Adding rd.break. Save and restart - Ctrl + X  
+![alt text](./assets/1.02.png)  
 
 We mount and run the main partition. We set a new password. Create a hidden file named .autorelabel in the root directory. Exit and restart.  
 
@@ -212,14 +219,14 @@ setenforce 1
 
 Change the serverB hostname to rhel.server.com and make it persistent.
 
-open file /etc/hostname  
+`vi /etc/hostname`  
 and change line to: rhel.server.com
 
 # Question 11
 
 On rhel.server.com, add a new enviroment variable "VAR" with the value "RHCSA Prac Five" which will be available throughout the system, on both remote login session as well as local sessions for all users.
 
-open file /etc/bashrc  
+`vi /etc/bashrc`  
 and add the line: export VAR="RHCSA Prac Five"  
 ```bash
 source /etc/bashrc  
@@ -230,7 +237,7 @@ echo $VAR
 
 On rhel.server.com, configure a permanent storage for "journald" logs with 100 max use.
 
-open file /etc/systemd/journald.conf  
+`vi /etc/systemd/journald.conf`  
 uncomment and change line to: Storage=persistent  
 and SystemMaxUse=100M
 ```bash
@@ -268,12 +275,12 @@ grep -r 'error' > /root/errors
 
 # Question 16
 
-Run the PostgreSQL database in a container with Podman and connect remotely.
+On ServerA run the PostgreSQL database in a container with Podman and connect remotely.
 
 Container launch:
 
 ```bash
-sudo podman run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres
+podman run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres
 ```
 -d → works in the background  
 -p 5432:5432 → exposes the PostgreSQL port to the system  
@@ -282,16 +289,16 @@ postgres → official database image
 
 You check:
 ```bash
-sudo firewall-cmd --list-ports
+firewall-cmd --list-ports
 ```
-If there is a port:
+If there is a port:  
 5432/tcp
 
 The firewall allows network traffic to port 5432. If there is no port, then:  
 
 ```bash
-sudo firewall-cmd --add-port=5432/tcp --permanent
-sudo firewall-cmd --reload
+firewall-cmd --add-port=5432/tcp --permanent
+firewall-cmd --reload
 ```
 --add-port → opens the port  
 --permanent → saves it permanently    
@@ -300,3 +307,12 @@ sudo firewall-cmd --reload
 Remote connection to PostgreSQL database:
 
 ![alt text](./assets/16-1.png)  
+
+# Question 17
+
+ On ServerB, as root create a cron job that deletes empty files from /tmp at 12:30 am daily.  
+ ```bash
+crontab -e
+```
+Add the line:   
+30 0 * * * find /tmp/ -type f -empty -delete // 0 is 12 am
