@@ -316,3 +316,15 @@ crontab -e
 ```
 Add the line:   
 30 0 * * * find /tmp/ -type f -empty -delete // 0 is 12 am
+
+# Question 18
+
+On ServerB, optimize the system to run in a virtual machine for the best performance and concurrently tunes it for low
+power consumption. Low power consumption is the priority.
+ ```bash
+dnf install tuned
+systemctl start tuned
+tuned-adm list
+tuned-adm active
+tuned-adm profile virtual-guest powersave
+```
