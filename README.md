@@ -328,3 +328,11 @@ tuned-adm list
 tuned-adm active
 tuned-adm profile virtual-guest powersave
 ```
+# Question 19
+
+On ServerB, all new users should have a file name “YouDidIt” in their home folder after account creation.
+
+ ```bash
+echo "Congratulations!" > /etc/skel/YouDidIt
+chmod 644 /etc/skel/YouDidIt
+```
