@@ -336,3 +336,25 @@ On ServerB, all new users should have a file name “YouDidIt” in their home f
 echo "Congratulations!" > /etc/skel/YouDidIt
 chmod 644 /etc/skel/YouDidIt
 ```
+# Question 20
+
+Schedule the task to run at 08:00 time on ServerA using the "at" command. You want to create a file named "example.sh" containing a command to create a file "example.txt" in your home directory.
+
+Checking if at is installed:
+ ```bash
+rpm -q at
+```
+Install at:
+ ```bash
+sudo dnf install -y at
+systemctl start atd
+systemctl enable atd
+```
+Solving the task:
+ ```bash
+echo -e '#!/bin/bash\ntouch ~/example.txt' > ~/example.sh
+chmod +x ~/example.sh
+at 08:00
+~/example.sh
+# Ctrl + D
+```
