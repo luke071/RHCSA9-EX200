@@ -452,3 +452,18 @@ grep → searches for user frodo
 | → forwards the result  
 sudo tee -a → writes to file as root  
 -a → append (writing)
+
+# Question 25
+
+On ServerB, write a script named “/find_rf.sh” that prints out a list of files owned by root and with the SUID bit set in /usr.
+
+```bash
+#!/bin/bash
+
+find /usr -type f -user root -perm -4000 2>/dev/null
+```
+
+-type f → only regular files (not directories)    
+-user root → files belonging to the root user  
+-perm -4000 → files with SUID - 4000 set can be executed as root even if run by a regular user  
+2>/dev/null → hides errors  
