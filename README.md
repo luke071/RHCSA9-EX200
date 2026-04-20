@@ -427,7 +427,7 @@ echo "Suma: $sum"
 
 Granting permissions:
 ```bash
-sudo chmod +x /sum.sh
+chmod +x /sum.sh
 ```
 Loading data from the user and displaying a message:  
 read -p "Enter number 1: " num1  
@@ -438,3 +438,17 @@ Checking if these are integers:
 
 Script exits with error code:  
 exit 1 
+
+# Question 24
+
+On ServerB, search the user frodo data in the “/etc/passwd” file and append the output in “/users/data”.
+
+```bash
+mkdir -p /users
+grep "^frodo:" /etc/passwd | sudo tee -a /users/data
+```
+
+grep → searches for user frodo    
+| → forwards the result  
+sudo tee -a → writes to file as root  
+-a → append (writing)
