@@ -386,9 +386,9 @@ We set the basic settings:
 ```bash
 chmod 640 /var/nhosts
 ```
-root: read/write
-grupa: read
-inni: brak dostępu
+root: read/write  
+group: read  
+others: no access  
 
 But this does NOT meet the requirements yet (because andrew and john are not included) → we will use ACL.  
   
@@ -405,3 +405,36 @@ setfacl → sets Access Control List
 -m → modification  
 u:andrews:rwx → user andrew has read/write/execute  
 u:john:r-- → user john only has read
+
+# Question 23
+
+ On ServerB, write a script "/sum.sh" that can do the arithmetical operation by giving the sum of two integers entered by any user.
+
+ ```bash
+#!/bin/bash
+
+read -p "Enter number 1: " num1
+read -p "Enter number 2: " num2
+
+if ! [[ "$num1" =~ ^-?[0-9]+$ && "$num2" =~ ^-?[0-9]+$ ]]; then
+    echo "Error: Please enter valid integers"
+    exit 1
+fi
+
+sum=$((num1 + num2))
+echo "Suma: $sum"
+ ```
+
+Granting permissions:
+```bash
+sudo chmod +x /sum.sh
+```
+Loading data from the user and displaying a message:  
+read -p "Enter number 1: " num1  
+
+Checking if these are integers:    
+
+=~ ^-?[0-9]+$  
+
+Script exits with error code:  
+exit 1 
