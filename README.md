@@ -358,3 +358,12 @@ at 08:00
 ~/example.sh
 # Ctrl + D
 ```
+
+# Question 21
+
+On ServerB, create a user peter with UID 1450 and expiry date 2026-12-31.  
+
+ ```bash
+useradd -u 1450 -e 2026-12-31 peter
+chage -l peter
+```
