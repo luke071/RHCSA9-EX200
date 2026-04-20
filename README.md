@@ -367,3 +367,41 @@ On ServerB, create a user peter with UID 1450 and expiry date 2026-12-31.
 useradd -u 1450 -e 2026-12-31 peter
 chage -l peter
 ```
+
+# Question 22
+
+On ServerB, copy “/etc/hosts” file to the “/var/” directory with the name "nhosts", then do the following:  
+User andrew can read, write, and execute the "nhosts" file.
+User john can only read the "nhosts" file.
+
+```bash
+cp /etc/hosts /var/nhosts
+```
+
+Check if root is the owner:  
+```bash
+ls -l /var/nhosts
+```
+We set the basic settings:  
+```bash
+chmod 640 /var/nhosts
+```
+root: read/write
+grupa: read
+inni: brak dostępu
+
+But this does NOT meet the requirements yet (because andrew and john are not included) → we will use ACL.  
+  
+user andrew: full rights (rwx)  
+```bash
+setfacl -m u:andrew:rwx /var/nhosts
+```
+user john: read only  
+```bash
+setfacl -m u:john:r-- /var/nhosts
+```
+ACL Explained:  
+setfacl → sets Access Control List  
+-m → modification  
+u:andrews:rwx → user andrew has read/write/execute  
+u:john:r-- → user john only has read
