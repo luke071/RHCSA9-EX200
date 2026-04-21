@@ -525,3 +525,15 @@ chmod 660 /home/Passwords
 ```
 
 The /home/Passwords file has been assigned to the admins group. Then the user Frodo was added to the admins group. Finally, the file permissions were set.
+
+# Question 28
+
+On ServerA, locate all lines within the "/etc/passwd" file that include the string "test". Create a file named "/root/test" containing exact copies of these lines in their original order, excluding any empty lines.
+
+```bash
+grep 'test' /etc/passwd | grep -v '^$' > /root/test
+```
+
+| → passes the result on and you create a chain of commands (without | each command works separately)  
+grep -v '^$' → filters this result (removes blank lines)  
+`>` → overwrites to file (>> writes to file)
