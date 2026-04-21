@@ -467,3 +467,43 @@ find /usr -type f -user root -perm -4000 2>/dev/null
 -user root → files belonging to the root user  
 -perm -4000 → files with SUID - 4000 set can be executed as root even if run by a regular user  
 2>/dev/null → hides errors  
+
+
+# Question 26
+
+On ServerB, perform the following tasks:  
+
+1. Grant execute permission to the file owner.
+2. Revoke read and write permissions for both group and other users.
+
+Use the file /home/$USER/myFile, which currently has the permissions rw-r--r--.
+
+Execute the following commands:
+
+```bash
+touch /home/$USER/myFile
+ls -l /home/$USER
+stat -c %a /home/$USER/myFile
+chmod u+x /home/$USER/myFile
+chmod go-rw /home/$USER/myFile
+ls -l /home/$USER
+```
+
+
+touch /home/$USER/myFile → Creates a file.  
+ls -l /home/$USER → Displays detailed information about files, including their permissions.  
+stat -c %a /home/$USER/myFile → Shows permissions in numeric (octal) format, e.g. 644.  
+chmod u+x → Adds execute permission (x) for owner (u).  
+chmod go-rw → Removes (-) read (r) and write (w) permissions.  
+
+
+The end result
+
+Permissions will change from:  
+```bash
+rw-r--r--  (644)
+```
+to:  
+```bash
+rwx------  (700)
+```
