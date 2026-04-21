@@ -507,3 +507,21 @@ to:
 ```bash
 rwx------  (700)
 ```
+
+
+# Question 27
+
+While trying to access the "/home/Passwords" file on ServerA, you received a "Permission Denied" error message. You
+suspect there may be a file permission issue. Please diagnose and correct the problem.  
+Assuming the following:  
+Note  
+The user trying to access the file is Frodo.
+The file group owner should be admins.  
+
+```bash
+chgrp admins /home/Passwords
+usermod -aG admins Frodo
+chmod 660 /home/Passwords
+```
+
+The /home/Passwords file has been assigned to the admins group. Then the user Frodo was added to the admins group. Finally, the file permissions were set.
