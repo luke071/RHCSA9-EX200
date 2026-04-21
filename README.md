@@ -537,3 +537,17 @@ grep 'test' /etc/passwd | grep -v '^$' > /root/test
 | → passes the result on and you create a chain of commands (without | each command works separately)  
 grep -v '^$' → filters this result (removes blank lines)  
 `>` → overwrites to file (>> writes to file)
+
+# Question 29
+
+On ServerA, scan and analyze the audit.log file for SELinux denials and attempts, and save the results to the
+“/audit_log.txt” file. Ensure the analysis provides clear explanations and actionable recommendations for resolving
+identified issues.
+
+```bash
+sealert -a /var/log/audit/audit.log > /audit_log.txt
+```
+
+sealert -a /var/log/audit/audit.log → command:
+* finds SELinux denials and attempted violations
+* adds a recommendation
