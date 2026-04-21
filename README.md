@@ -549,5 +549,41 @@ sealert -a /var/log/audit/audit.log > /audit_log.txt
 ```
 
 sealert -a /var/log/audit/audit.log → command:
-* finds SELinux denials and attempted violations
-* adds a recommendation
+* detects SELinux denials and policy violation attempts
+* provides recommendations
+
+# Question 30
+
+ServerB is running Apache HTTP Server, which needs to access files in the directory: /var/www/html/mydirectory. However, SELinux is currently preventing this access.     
+Task:   
+Modify the SELinux policy on ServerB to grant Apache HTTP Server access to files in /var/www/html/mydirectory securely, following best practices.     
+Additional Considerations:  
+This modification should persist after a server reboot.
+Minimize the impact on other applications or directories.
+
+```bash
+ls -Z /var/www/html
+semanage fcontext -a -t httpd_sys_content_t "/var/www/html/mydirectory(/.*)?"
+restorecon -Rv /var/www/html/mydirectory
+```
+
+The directory had the wrong SELinux context (label). Check the context:
+```bash
+ls -Z /var/www/html
+```
+Set the correct SELinux context for Apache:
+```bash
+semanage fcontext -a -t httpd_sys_content_t "/var/www/html/mydirectory(/.*)?"
+```
+-a → adds a rule  
+-t httpd_sys_content_t → Apache type (read only)  
+(/.*)? → includes the directory and all files inside  
+
+Apply changes:
+```bash
+restorecon -Rv /var/www/html/mydirectory
+```
+Optionally check if httpd_sys_content_t is present:
+```bash
+ls -Z /var/www/html/mydirectory
+```
