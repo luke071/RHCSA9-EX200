@@ -594,3 +594,11 @@ On ServerA, find the string blank in "/etc/passwd" and send it to the file "/hom
 ```bash
 grep 'blank' /etc/passwd >> /home/blankword
 ```
+
+# Question 32
+
+ Which of the following command sequences overwrites the file sample.txt?
+
+ ```bash
+echo "text" > sample.txt
+ ```
