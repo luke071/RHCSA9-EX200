@@ -587,3 +587,10 @@ Optionally check if httpd_sys_content_t is present:
 ```bash
 ls -Z /var/www/html/mydirectory
 ```
+# Question 31
+
+On ServerA, find the string blank in "/etc/passwd" and send it to the file "/home/blankword" without removing the file content.
+
+```bash
+grep 'blank' /etc/passwd >> /home/blankword
+```
