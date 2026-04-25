@@ -602,3 +602,75 @@ grep 'blank' /etc/passwd >> /home/blankword
  ```bash
 echo "text" > sample.txt
  ```
+
+ # Question 33
+
+ On ServerB, configure autofs to mount the "/home" directory of the remote NFS server at boot time. The remote NFS server's IP address is "192.168.0.60/24" and the exported directory is "/nfs/home". Ensure that the mount is accessible to all users on the local system.
+
+* Installing packages:  
+```bash
+dnf install -y autofs nfs-utils
+```
+* Add an entry to /etc/auto.master:  
+```bash
+vi /etc/auto.master
+```
+Entry:  
+/home  /etc/auto.home      
+* Create a map /etc/auto.home  
+```bash
+vi /etc/auto.home
+```
+Wildcard map for every user:    
+-rw,sync   192.168.0.60:/export/home/&  
+* Run autofs: 
+```bash 
+systemctl enable --now autofs  
+```
+* Restart:  
+```bash
+systemctl restart autofs
+```
+* Test:  
+```bash
+cd /home/testuser
+```
+
+# Bonus
+
+NFS Server Configuration (Rocky Linux 9) - This is not required for the exam!  
+
+```bash
+dnf install -y nfs-utils
+mkdir -p /nfs/home
+chmod 755 /nfs/home
+```
+Export configuration:  
+```bash
+vi /etc/exports
+```
+Add:  
+/nfs/home 192.168.0.0/24(rw,sync,no_root_squash)  
+
+Explanation:  
+192.168.0.0/24 → the entire network has access  
+rw → read + write  
+sync → synchronous writting   
+no_root_squash → the root user on the client is not treated as root on the server      
+
+Enabling services:  
+```bash
+systemctl enable --now nfs-server
+```
+Loading exports:  
+```bash
+exportfs -rav
+```
+Firewall and SELinux:  
+```bash
+firewall-cmd --permanent --add-service=nfs
+firewall-cmd --permanent --add-service=mountd
+firewall-cmd --permanent --add-service=rpc-bind
+firewall-cmd --reload
+setsebool -P nfs_export_all_rw on
+```
