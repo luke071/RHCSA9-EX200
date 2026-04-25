@@ -674,3 +674,29 @@ firewall-cmd --permanent --add-service=rpc-bind
 firewall-cmd --reload
 setsebool -P nfs_export_all_rw on
 ```
+
+# Question 34
+ On ServerB, install the appropriate kernel update. The following criteria must also be met:
+* The updated kernel is the default kernel when the system is rebooted.
+* The original kernel remains available and bootable on the system.  
+
+You need to do a standard kernel update, but without removing the old one and make sure the new one is the default one:  
+```bash
+sudo dnf update kernel
+```
+Check installed kernels (there should be an old and a new one):  
+```bash
+rpm -q kernel
+```
+Check GRUB Entry List:  
+```bash
+sudo awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+```
+Set the first (latest) kernel as default:  
+```bash
+sudo grub2-set-default 0
+```
+Check:  
+```bash
+grub2-editenv list
+```
