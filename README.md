@@ -700,3 +700,15 @@ Check:
 ```bash
 grub2-editenv list
 ```
+
+# Question 35
+On ServerB, create a user harry whose UID is 5000, and he doesn't have access to any interactive shell on the system.
+```bash
+useradd -u 5000 -s /sbin/nologin harry
+```
+Check the shell:  
+```bash
+getent passwd harry
+```
+Command output:  
+harry:x:5000:5000::/home/harry:/usr/sbin/nologin
