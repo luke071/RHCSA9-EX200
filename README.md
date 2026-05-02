@@ -712,3 +712,23 @@ getent passwd harry
 ```
 Command output:  
 harry:x:5000:5000::/home/harry:/usr/sbin/nologin
+
+# Question 36
+On ServerA,  in the /home/$USER/ directory:
+- create a file file_a
+- create soft link life_b pointing to file_a
+- create hard link file_c pointing to file_a
+- verify all links work
+
+```bash
+touch file_a
+ln -s file_a file_b
+ln file_a file_c
+ls -li
+```
+Delete the file_a file and check if the links work:  
+```bash
+rm file_a
+cat file_b # broken link
+cat file_c # work 
+```
