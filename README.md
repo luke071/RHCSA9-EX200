@@ -803,8 +803,23 @@ Add an entry to /etc/fstab to activate it on startup:
 # /etc/fstab
 /dev/sdb1   swap    swap    defaults    0 0
 ```
-Test the correctness of the entry:
+Check:
 ```bash
 sudo swapoff -a
 sudo swapon -a
 ```
+
+# Question 39
+
+Enable IPV6 packet forwarding on ServerB. This should persist after a reboot.
+
+```bash
+vi /etc/sysctl.conf
+```
+Add at the end:  
+net.ipv6.conf.all.forwarding=1
+```bash
+sysctl -p
+```
+
+The server now works like a router for IPv6 traffic
