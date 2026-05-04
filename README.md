@@ -822,4 +822,15 @@ net.ipv6.conf.all.forwarding=1
 sysctl -p
 ```
 
-The server now works like a router for IPv6 traffic
+The server now works like a router for IPv6 traffic.
+
+# Question 40
+
+On ServerB, optimize the system to run in a virtual machine for the desktop use-case tuned profile.
+
+```bash
+tuned-adm profile virtual-guest
+tuned-adm active
+```
+
+The system is now optimized to run as a desktop in a virtual machine, and the setting is persistent across reboots.
