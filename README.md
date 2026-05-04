@@ -751,7 +751,7 @@ fdisk /dev/sdb
 # +15G → size
 # t → change type
 # 8e → LVM
-# w → save
+# w → save and exit
 ```
 Refresh the system after partition changes:
 ```bash
@@ -774,3 +774,37 @@ Check:
 df -h
 ```
 
+# Question 38
+
+On ServerA, create a 200MB swap partition using /dev/sdb that automatically activates at boot.
+
+```bash
+sudo fdisk /dev/sdb
+# n → new partition
+# p → primary
+# 1 → partition number
+#enter → default first sector
+#+200M
+#t → type change
+#82 → swap code
+#w → save and exit
+```
+
+Create swap on the new partition:
+```bash
+sudo mkswap /dev/sdb1
+```
+Activate swap:
+```bash
+sudo swapon /dev/sdb1
+```
+Add an entry to /etc/fstab to activate it on startup:
+```bash
+# /etc/fstab
+/dev/sdb1   swap    swap    defaults    0 0
+```
+Test the correctness of the entry:
+```bash
+sudo swapoff -a
+sudo swapon -a
+```
