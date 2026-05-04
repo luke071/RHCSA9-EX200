@@ -715,10 +715,10 @@ harry:x:5000:5000::/home/harry:/usr/sbin/nologin
 
 # Question 36
 On ServerA,  in the /home/$USER/ directory:
-- create a file file_a
-- create soft link life_b pointing to file_a
-- create hard link file_c pointing to file_a
-- verify all links work
+- Create a file file_a.
+- Create soft link life_b pointing to file_a.
+- Create hard link file_c pointing to file_a.
+- Verify all links work.
 
 ```bash
 touch file_a
@@ -732,3 +732,45 @@ rm file_a
 cat file_b # broken link
 cat file_c # work 
 ```
+# Question 37
+
+On ServerB, a new 20GB disk was added, which is visible as /dev/sdb.
+- Create a 15 GB partition on the /dev/sdb drive.
+- Add this space to the existing LVM volume group.
+- Extend the logical system volume by 15 GB.
+- Expand the file system without losing data.
+- Ensure that the configuration is persistent and available after a system restart.
+
+```bash
+lsblk # Check the disk
+fdisk /dev/sdb
+# n → new partition
+# p → primary
+# enter → numer: default
+# enter → start: Enter
+# +15G → size
+# t → change type
+# 8e → LVM
+# w → save
+```
+Refresh the system after partition changes:
+```bash
+partprobe
+```
+Physical Volume:
+```bash
+pvcreate /dev/sdb1
+```
+Add to VG (vgs rl):
+```bash
+vgextend rl /dev/sdb1
+```
+Extend Logical Volume + filesystem (XFS):
+```bash
+lvextend -r -L +15G /dev/rl/root
+```
+Check:
+```bash
+df -h
+```
+
